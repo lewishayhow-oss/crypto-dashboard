@@ -14,27 +14,11 @@ A real-time, full-stack cryptocurrency dashboard that streams live Bitcoin price
 *   Python 3.8+
 *   Node.js & npm
 
-### 1. Setup
-**Backend:**
-```bash
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-**Frontend:**
-```bash
-cd market-stream/frontend
-npm install
-cd ../..
-```
-
-### 2. Start the App
+### Start the App
 Simply double-click **`run_app.bat`** on Windows.
 
 Or run manually:
-```bash
-npx concurrently -k -n "ENGINE,API,UI" -c "blue,magenta,green" "venv\Scripts\python market-stream/data-engine/server.py" "venv\Scripts\python market-stream/api-gateway/app.py" "npm run dev --prefix market-stream/frontend"
+```bash npx concurrently -k -n "ENGINE,API,UI" -c "blue,magenta,green" "venv\Scripts\python market-stream/data-engine/server.py" "venv\Scripts\python market-stream/api-gateway/app.py" "npm run dev --prefix market-stream/frontend"
 ```
 
 The dashboard will open at `http://localhost:5173`.
