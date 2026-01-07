@@ -17,9 +17,12 @@ A real-time, full-stack cryptocurrency dashboard that streams live Bitcoin price
 ### Start the App
 Simply double-click **`run_app.bat`** on Windows.
 
-Or run manually:
+Or run manually, with the terminal in the crypto-dashboard directory:
 ```bash 
 npx concurrently -k -n "ENGINE,API,UI" -c "blue,magenta,green" "venv\Scripts\python market-stream/data-engine/server.py" "venv\Scripts\python market-stream/api-gateway/app.py" "npm run dev --prefix market-stream/frontend"
 ```
 
-The dashboard will open at `http://localhost:5173`.
+The dashboard will open automatically.
+If not, try these urls:
+http://localhost:5173
+http://localhost:5174
