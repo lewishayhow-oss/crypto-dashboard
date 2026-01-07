@@ -25,4 +25,5 @@ npx concurrently -k -n "ENGINE,API,UI" -c "blue,magenta,green" "venv\Scripts\pyt
 The dashboard will open automatically.
 If not, try these urls:
 http://localhost:5173
+
 http://localhost:5174
