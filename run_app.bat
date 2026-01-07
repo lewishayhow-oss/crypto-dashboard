@@ -1,15 +1,55 @@
 @echo off
-echo Starting CryptoDashboard...
-echo.
-echo Make sure you have installed dependencies first!
-echo (pip install -r requirements.txt)
-echo (cd market-stream/frontend && npm install)
-echo.
-echo Starting Engine, API, and Frontend...
+TITLE CryptoDashboard Launcher
 
-npx concurrently -k -n "ENGINE,API,UI" -c "blue,magenta,green" ^
+echo ===================================================
+echo      CryptoDashboard - Automatic Setup & Run
+echo ===================================================
+echo.
+
+:: 1. Check if Node is installed
+where node >nul 2>nul
+if %errorlevel% neq 0 (
+    echo [ERROR] Node.js is not installed. Please install it from nodejs.org
+    pause
+    exit /b
+)
+
+:: 2. Setup Frontend (if missing)
+if not exist "market-stream\frontend\node_modules" (
+    echo [First Run] Installing Frontend dependencies (this may take a minute)...
+    cd market-stream/frontend
+    call npm install
+    cd ..\..
+    echo [OK] Frontend ready.
+    echo.
+)
+
+:: 3. Setup Backend (if missing)
+if not exist "venv" (
+    echo [First Run] Creating Python virtual environment...
+    python -m venv venv
+    
+    echo [First Run] Installing Python libraries...
+    call venv\Scripts\activate.bat
+    pip install -r requirements.txt
+    
+    echo [OK] Backend ready.
+    echo.
+)
+
+:: 4. Run the App
+echo Starting Engine, API, and Frontend...
+echo (Press Ctrl+C to close all windows)
+echo.
+
+call npx -y concurrently -k -n "ENGINE,API,UI" -c "blue,magenta,green" ^
   "venv\Scripts\python market-stream/data-engine/server.py" ^
   "venv\Scripts\python market-stream/api-gateway/app.py" ^
   "npm run dev --prefix market-stream/frontend"
 
-pause
+if %errorlevel% neq 0 (
+    echo.
+    echo [ERROR] The application crashed or was closed.
+    pause
+)
+
