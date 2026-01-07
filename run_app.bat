@@ -1,8 +1,9 @@
 @echo off
+SETLOCAL EnableDelayedExpansion
 TITLE CryptoDashboard Launcher
 
 echo ===================================================
-echo      CryptoDashboard - Automatic Setup & Run
+echo      CryptoDashboard - Automatic Setup and Run
 echo ===================================================
 echo.
 
@@ -15,17 +16,17 @@ if %errorlevel% neq 0 (
 )
 
 :: 2. Setup Frontend (if missing)
-if not exist "market-stream\frontend\node_modules" (
-    echo [First Run] Installing Frontend dependencies (this may take a minute)...
-    cd market-stream/frontend
+if not exist "market-stream\frontend\node_modules\" (
+    echo [First Run] Installing Frontend dependencies...
+    pushd market-stream\frontend
     call npm install
-    cd ..\..
+    popd
     echo [OK] Frontend ready.
     echo.
 )
 
 :: 3. Setup Backend (if missing)
-if not exist "venv" (
+if not exist "venv\" (
     echo [First Run] Creating Python virtual environment...
     python -m venv venv
     
@@ -42,14 +43,11 @@ echo Starting Engine, API, and Frontend...
 echo (Press Ctrl+C to close all windows)
 echo.
 
-call npx -y concurrently -k -n "ENGINE,API,UI" -c "blue,magenta,green" ^
-  "venv\Scripts\python market-stream/data-engine/server.py" ^
-  "venv\Scripts\python market-stream/api-gateway/app.py" ^
-  "npm run dev --prefix market-stream/frontend"
+:: We use the direct path to npx to be safe
+call npx -y concurrently -k -n "ENGINE,API,UI" -c "blue,magenta,green" "venv\Scripts\python market-stream/data-engine/server.py" "venv\Scripts\python market-stream/api-gateway/app.py" "npm run dev --prefix market-stream/frontend"
 
 if %errorlevel% neq 0 (
     echo.
-    echo [ERROR] The application crashed or was closed.
+    echo [ERROR] The application stopped unexpectedly.
     pause
 )
-
