@@ -2,6 +2,25 @@
 SETLOCAL EnableDelayedExpansion
 TITLE CryptoDashboard Launcher
 
+:: --- SHORT PATH FIX FOR WINDOWS ---
+:: Python 3.14 builds fail on deep paths. We use a virtual drive (Z:) to shorten them.
+if /I "%CD:~0,2%" NEQ "Z:" (
+    echo [Setup] Mounting project to virtual drive Z: to fix path length issues...
+    subst Z: .
+    if exist Z:\ (
+        Z:
+        cd \
+        call run_app.bat
+        :: Cleanup after the recursive call returns
+        c:
+        subst Z: /d >nul 2>nul
+        exit /b
+    ) else (
+        echo [WARNING] Could not mount Z: drive. Attempting to run normally...
+    )
+)
+:: ----------------------------------
+
 echo ===================================================
 echo      CryptoDashboard - Automatic Setup and Run
 echo ===================================================
@@ -32,6 +51,8 @@ if not exist "venv\" (
     
     echo [First Run] Installing Python libraries...
     call venv\Scripts\activate.bat
+    :: We upgrade pip first to handle new Python versions better
+    python -m pip install --upgrade pip
     pip install -r requirements.txt
     
     echo [OK] Backend ready.
@@ -43,7 +64,7 @@ echo Starting Engine, API, and Frontend...
 echo (Press Ctrl+C to close all windows)
 echo.
 
-:: We use the direct path to npx to be safe
+:: Run concurrently
 call npx -y concurrently -k -n "ENGINE,API,UI" -c "blue,magenta,green" "venv\Scripts\python market-stream/data-engine/server.py" "venv\Scripts\python market-stream/api-gateway/app.py" "npm run dev --prefix market-stream/frontend"
 
 if %errorlevel% neq 0 (
