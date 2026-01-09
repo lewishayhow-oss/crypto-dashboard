@@ -1,5 +1,11 @@
 # Bitcoin Live Tracker (CryptoDashboard)
 
+
+
+https://github.com/user-attachments/assets/3356849a-4946-434f-a374-5da59f533aa3
+
+
+
 A real-time, full-stack cryptocurrency dashboard that streams live Bitcoin prices using a microservices architecture.
 
 ## 🏗 Architecture
