@@ -1,4 +1,4 @@
-# Bitcoin Live Tracker (CryptoDashboard)
+# Bitcoin Live Tracker (Cryptocurrency Dashboard)
 
 
 
