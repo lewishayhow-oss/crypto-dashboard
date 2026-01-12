@@ -2,20 +2,26 @@ syntax = "proto3";
 
 package market;
 
-// The Service definition
+// Establishes what is sent and what is recieved
 service MarketData {
-  // A function that asks for the current price of a symbol
+  // Establishes sending the asset symbol to recieve the asset data (price and timestamp)
   rpc GetPrice (PriceRequest) returns (PriceReply) {}
 }
 
-// The request message (what we send)
+// Request parameters for fetching a price
 message PriceRequest {
-  string symbol = 1; // e.g., "AAPL"
+  // The ticker symbol of the asset (e.g. "BTC")
+  string symbol = 1; // e.g., "BTC"
 }
 
-// The response message (what we receive)
+// Price data response
 message PriceReply {
+  // Ticker symbol - labelled as the 1st data packet
   string symbol = 1;
+
+  // Price data - 2nd data packet
   float price = 2;
+
+  // ISO 8601 server timestamp (e.g. "2025-10-05T14:48:00Z")
   string timestamp = 3;
 }

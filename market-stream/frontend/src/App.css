@@ -36,7 +36,9 @@ h1 {
   border-radius: 15px;
   padding: 30px;
   flex: 1;
-  min-width: 300px; /* Prevent it from getting too small on mobile */
+
+  /* Set a minimum width to prevent being too small on mobile */
+  min-width: 300px; 
   min-height: 350px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }

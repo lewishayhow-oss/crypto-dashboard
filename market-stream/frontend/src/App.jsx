@@ -34,8 +34,8 @@ function App() {
     // Fetch immediately on load
     updatePrice();
 
-    // Set up a timer to fetch every 3 seconds
-    const interval = setInterval(updatePrice, 3000);
+    // Set up a timer to fetch every 1 second
+    const interval = setInterval(updatePrice, 1000);
 
     // Clean up the timer when the component unmounts
     return () => clearInterval(interval);

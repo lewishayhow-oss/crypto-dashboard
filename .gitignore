@@ -13,3 +13,6 @@ dist/
 # IDEs
 .vscode/
 .idea/
+
+# Agent
+GEMINI.md

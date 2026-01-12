@@ -8,10 +8,10 @@ class TestMarketEngine(unittest.TestCase):
         self.servicer = MarketDataServicer()
 
     def test_get_price_btc(self):
-        # 1. Create a dummy request
+        # Dummy request
         request = market_pb2.PriceRequest(symbol="BTC")
         
-        # 2. Call the function directly (no network needed for unit tests!)
+        # Call the function directly (no network needed for unit tests!)
         response = self.servicer.GetPrice(request, None)
         
         # 3. Verify the results

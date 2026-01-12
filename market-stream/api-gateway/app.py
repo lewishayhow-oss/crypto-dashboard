@@ -12,7 +12,7 @@ channel = grpc.insecure_channel('localhost:50051')
 stub = market_pb2_grpc.MarketDataStub(channel)
 
 @app.route('/price/<symbol>', methods=['GET'])
-def get_price(symbol):
+def get_price(symbol: str):
     try:
         # Make the gRPC call to the Engine
         response = stub.GetPrice(market_pb2.PriceRequest(symbol=symbol.upper()))
